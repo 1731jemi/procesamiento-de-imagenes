@@ -94,3 +94,43 @@ var Bubble = /** @class */ (function () {
     return Bubble;
 }());
 export { Bubble };
+var Snowman = /** @class */ (function () {
+    function Snowman(x, y, headRadius, bodyRadius, baseRadius, ctx) {
+        this.x = x;
+        this.y = y;
+        this.headRadius = headRadius;
+        this.bodyRadius = bodyRadius;
+        this.baseRadius = baseRadius;
+        this.ctx = ctx;
+    }
+    Snowman.prototype.draw = function () {
+        // Dibuja la cabeza
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y - this.headRadius - this.bodyRadius - this.baseRadius, this.headRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fill();
+        this.ctx.closePath();
+        // Dibuja el cuerpo
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y - this.bodyRadius - this.baseRadius, this.bodyRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fill();
+        this.ctx.closePath();
+        // Dibuja la base
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y - this.baseRadius, this.baseRadius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fill();
+        this.ctx.closePath();
+    };
+    Snowman.prototype.updatePosition = function (mouseX, mouseY) {
+        this.x = mouseX;
+        this.y = mouseY;
+    };
+    Snowman.prototype.checkCollision = function (mouseX, mouseY) {
+        var distance = Math.sqrt((mouseX - this.x) * 2 + (mouseY - this.y) * 2);
+        return distance < this.headRadius + this.bodyRadius + this.baseRadius;
+    };
+    return Snowman;
+}());
+export { Snowman };

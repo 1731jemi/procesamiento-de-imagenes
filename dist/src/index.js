@@ -4,7 +4,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed } from "./oproyecto.js";
+import { ColorfulQuadrant, Bubble, Seaweed, Snowman } from "./oproyecto.js";
 var lienzo1;
 var lienzo2;
 var lienzo4;
@@ -257,11 +257,6 @@ var mouse = {
     y: null,
     radius: 50
 };
-function handleMouse(e) {
-    mouse.x = e.x; // - canvasPosition.left;
-    mouse.y = e.y; // - canvasPosition.top;
-    //console.log(mouse.x, mouse.y)
-}
 function textEfects(evt) {
     var args = prompt("Ingresa texto, tamaño de texto y coord x y y, separados por coma:");
     var factores = args.split(','); //.map(elem => parseInt(elem));
@@ -319,11 +314,10 @@ function opCuadrantesColor() {
     initColorfulQuadrants();
     animateColorfulQuadrants();
 }
-//Efecto globo
+//Efecto fondo marino
 var seaweedArray = [];
 var bubbleArray = [];
 function initUnderwater() {
-    // Crea algas en posiciones aleatorias
     for (var i = 0; i < 10; i++) {
         var x = Math.random() * pantalla2.canvas.width;
         var y = pantalla2.canvas.height;
@@ -337,7 +331,6 @@ function initUnderwater() {
         var radius = Math.random() * 10 + 5;
         bubbleArray.push(new Bubble(x, y, radius, ctx));
     }
-    // Agrega un manejador de eventos para el movimiento del mouse
     pantalla2.canvas.addEventListener('mousemove', handleMouseMove);
 }
 function handleMouseMove(event) {
@@ -361,6 +354,27 @@ function animateUnderwater() {
 function opFondoSubmarino() {
     initUnderwater();
     animateUnderwater();
+}
+// fecto tormenta
+var snowman;
+function initSnowman() {
+    snowman = new Snowman(200, 200, 30, 50, 70, pantalla2);
+}
+function animateSnowman() {
+    pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    snowman.draw();
+    snowman.checkCollision(mouse.x, mouse.y);
+    requestAnimationFrame(animateSnowman);
+}
+pantalla2.canvas.addEventListener('mousemove', handleMouse);
+function handleMouse(event) {
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+    snowman.updatePosition(mouse.x, mouse.y);
+}
+function opsnowman() {
+    initSnowman();
+    animateSnowman();
 }
 //seccion de histogramas  
 function histogramas(evt) {
@@ -472,3 +486,4 @@ dropZone.addEventListener('drop', imgLocal.handleFileSelect, false);
 // llamadas para funciones nuevas 
 document.getElementById("op-cuadrantes").addEventListener('click', opCuadrantesColor, false);
 document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSubmarino, false);
+document.getElementById("op-snowman").addEventListener('click', opsnowman, false);

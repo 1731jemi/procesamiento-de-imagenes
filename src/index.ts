@@ -5,7 +5,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed  } from "./oproyecto.js"
+import { ColorfulQuadrant, Bubble, Seaweed , Snowman} from "./oproyecto.js"
 
 
 
@@ -277,11 +277,6 @@ let mouse:any = {
   radius: 50
 };
 
-function handleMouse(e: any) {
-  mouse.x = e.x;// - canvasPosition.left;
-  mouse.y = e.y;// - canvasPosition.top;
-  //console.log(mouse.x, mouse.y)
-}
 
 function textEfects(evt: any): void{
   var args = prompt("Ingresa texto, tamaño de texto y coord x y y, separados por coma:");
@@ -356,7 +351,8 @@ function opCuadrantesColor() {
   animateColorfulQuadrants();
 }
 
-//Efecto globo
+//Efecto fondo marino
+
 
 let seaweedArray: Seaweed[] = [];
 let bubbleArray: Bubble[] = [];
@@ -413,31 +409,44 @@ function opFondoSubmarino() {
 }
 
 
+// fecto tormenta
+
+let snowman: Snowman;
+
+function initSnowman() {
+ 
+  snowman = new Snowman(200, 200, 30, 50, 70, pantalla2);
+}
+
+function animateSnowman() {
+  
+  pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+
+  snowman.draw();
+
+  snowman.checkCollision(mouse.x, mouse.y);
 
 
+  requestAnimationFrame(animateSnowman);
+}
 
 
+pantalla2.canvas.addEventListener('mousemove', handleMouse);
 
 
+function handleMouse(event: MouseEvent) {
+  mouse.x = event.clientX;
+  mouse.y = event.clientY;
 
 
+  snowman.updatePosition(mouse.x, mouse.y);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function opsnowman() {
+ 
+  initSnowman();
+  animateSnowman();
+}
 
 //seccion de histogramas  
 function histogramas(evt: any): void{
@@ -567,4 +576,4 @@ dropZone.addEventListener('drop', imgLocal.handleFileSelect, false);
 
 document.getElementById("op-cuadrantes").addEventListener('click', opCuadrantesColor, false);
 document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSubmarino, false);
-
+document.getElementById("op-snowman").addEventListener('click', opsnowman, false);
