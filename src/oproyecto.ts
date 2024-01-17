@@ -76,6 +76,7 @@ export class ColorfulQuadrant {
     }
   }
   
+  // Clase Bubble
   export class Bubble {
     protected x: number;
     protected y: number;
@@ -108,5 +109,19 @@ export class ColorfulQuadrant {
       if (this.y + this.radius < 0) {
         this.y = this.ctx.canvas.height + this.radius;
       }
+    }
+  
+    public updatePosition(mouseX: number, mouseY: number) {
+      const distanceX = mouseX - this.x;
+      const distanceY = mouseY - this.y;
+  
+      const angle = Math.atan2(distanceY, distanceX);
+  
+      // Calcula la nueva posición en función del ángulo y la distancia al mouse
+      const newX = this.x + Math.cos(angle) * this.speedY;
+      const newY = this.y + Math.sin(angle) * this.speedY;
+  
+      this.x = newX;
+      this.y = newY;
     }
   }

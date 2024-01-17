@@ -57,6 +57,7 @@ var Seaweed = /** @class */ (function () {
     return Seaweed;
 }());
 export { Seaweed };
+// Clase Bubble
 var Bubble = /** @class */ (function () {
     function Bubble(x, y, radius, ctx) {
         this.x = x;
@@ -79,6 +80,16 @@ var Bubble = /** @class */ (function () {
         if (this.y + this.radius < 0) {
             this.y = this.ctx.canvas.height + this.radius;
         }
+    };
+    Bubble.prototype.updatePosition = function (mouseX, mouseY) {
+        var distanceX = mouseX - this.x;
+        var distanceY = mouseY - this.y;
+        var angle = Math.atan2(distanceY, distanceX);
+        // Calcula la nueva posición en función del ángulo y la distancia al mouse
+        var newX = this.x + Math.cos(angle) * this.speedY;
+        var newY = this.y + Math.sin(angle) * this.speedY;
+        this.x = newX;
+        this.y = newY;
     };
     return Bubble;
 }());

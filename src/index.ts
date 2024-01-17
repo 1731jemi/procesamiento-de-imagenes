@@ -362,7 +362,7 @@ let seaweedArray: Seaweed[] = [];
 let bubbleArray: Bubble[] = [];
 
 function initUnderwater() {
-  // Crea algas en posiciones aleatorias
+  
   for (let i = 0; i < 10; i++) {
     let x = Math.random() * pantalla2.canvas.width;
     let y = pantalla2.canvas.height;
@@ -377,14 +377,22 @@ function initUnderwater() {
     let radius = Math.random() * 10 + 5;
     bubbleArray.push(new Bubble(x, y, radius, ctx));
   }
+
+ 
+  pantalla2.canvas.addEventListener('mousemove', handleMouseMove);
 }
 
+function handleMouseMove(event: MouseEvent) {
+  // Actualiza la posición de las burbujas según la posición del mouse
+  for (let i = 0; i < bubbleArray.length; i++) {
+    bubbleArray[i].updatePosition(event.clientX, event.clientY);
+  }
+}
 
 function animateUnderwater() {
   pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
   pantalla2.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
 
-  
   for (let i = 0; i < seaweedArray.length; i++) {
     seaweedArray[i].draw();
   }
@@ -393,7 +401,6 @@ function animateUnderwater() {
     bubbleArray[i].update();
     bubbleArray[i].draw();
   }
-
 
   requestAnimationFrame(animateUnderwater);
 }

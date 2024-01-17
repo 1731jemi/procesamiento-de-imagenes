@@ -337,6 +337,14 @@ function initUnderwater() {
         var radius = Math.random() * 10 + 5;
         bubbleArray.push(new Bubble(x, y, radius, ctx));
     }
+    // Agrega un manejador de eventos para el movimiento del mouse
+    pantalla2.canvas.addEventListener('mousemove', handleMouseMove);
+}
+function handleMouseMove(event) {
+    // Actualiza la posición de las burbujas según la posición del mouse
+    for (var i = 0; i < bubbleArray.length; i++) {
+        bubbleArray[i].updatePosition(event.clientX, event.clientY);
+    }
 }
 function animateUnderwater() {
     pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
