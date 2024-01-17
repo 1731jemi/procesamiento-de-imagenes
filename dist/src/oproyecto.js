@@ -95,41 +95,70 @@ var Bubble = /** @class */ (function () {
 }());
 export { Bubble };
 var Snowman = /** @class */ (function () {
-    function Snowman(x, y, headRadius, bodyRadius, baseRadius, ctx) {
+    function Snowman(x, y, ctx) {
         this.x = x;
         this.y = y;
-        this.headRadius = headRadius;
-        this.bodyRadius = bodyRadius;
-        this.baseRadius = baseRadius;
         this.ctx = ctx;
     }
     Snowman.prototype.draw = function () {
-        // Dibuja la cabeza
+        this.drawSnowman();
+        this.drawHat();
+        this.drawFace();
+    };
+    Snowman.prototype.drawSnowman = function () {
+        // Cuerpo
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y - this.headRadius - this.bodyRadius - this.baseRadius, this.headRadius, 0, Math.PI * 2);
+        this.ctx.arc(this.x, this.y, 30, 0, Math.PI * 2);
         this.ctx.fillStyle = 'white';
         this.ctx.fill();
         this.ctx.closePath();
-        // Dibuja el cuerpo
+        // Cabeza
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y - this.bodyRadius - this.baseRadius, this.bodyRadius, 0, Math.PI * 2);
-        this.ctx.fillStyle = 'white';
-        this.ctx.fill();
-        this.ctx.closePath();
-        // Dibuja la base
-        this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y - this.baseRadius, this.baseRadius, 0, Math.PI * 2);
+        this.ctx.arc(this.x, this.y - 40, 20, 0, Math.PI * 2);
         this.ctx.fillStyle = 'white';
         this.ctx.fill();
         this.ctx.closePath();
     };
-    Snowman.prototype.updatePosition = function (mouseX, mouseY) {
-        this.x = mouseX;
-        this.y = mouseY;
+    Snowman.prototype.drawHat = function () {
+        // Sombrero
+        this.ctx.beginPath();
+        this.ctx.rect(this.x - 25, this.y - 75, 50, 40);
+        this.ctx.fillStyle = 'black';
+        this.ctx.fill();
+        this.ctx.closePath();
+        // Banda del sombrero
+        this.ctx.beginPath();
+        this.ctx.rect(this.x - 25, this.y - 75, 50, 10);
+        this.ctx.fillStyle = 'red';
+        this.ctx.fill();
+        this.ctx.closePath();
     };
-    Snowman.prototype.checkCollision = function (mouseX, mouseY) {
-        var distance = Math.sqrt((mouseX - this.x) * 2 + (mouseY - this.y) * 2);
-        return distance < this.headRadius + this.bodyRadius + this.baseRadius;
+    Snowman.prototype.drawFace = function () {
+        // Ojos
+        this.ctx.beginPath();
+        this.ctx.arc(this.x - 8, this.y - 45, 2, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'red'; // Color de los ojos
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x + 8, this.y - 45, 2, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'red'; // Color de los ojos
+        this.ctx.fill();
+        this.ctx.closePath();
+        // Nariz
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.x - 2, this.y - 40);
+        this.ctx.lineTo(this.x + 2, this.y - 40);
+        this.ctx.lineTo(this.x, this.y - 35);
+        this.ctx.fillStyle = 'orange'; // Color de la nariz
+        this.ctx.fill();
+        this.ctx.closePath();
+        // Boca
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y - 35, 5, 0, Math.PI, false);
+        this.ctx.fillStyle = 'black'; // Color de la boca
+        this.ctx.fill();
+        this.ctx.closePath();
     };
     return Snowman;
 }());

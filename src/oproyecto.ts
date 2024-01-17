@@ -127,52 +127,82 @@ export class ColorfulQuadrant {
   }
 
   export class Snowman {
-    protected x: number;
-    protected y: number;
-    protected headRadius: number;
-    protected bodyRadius: number;
-    protected baseRadius: number;
+    public x: number;
+    public y: number;
     protected ctx: CanvasRenderingContext2D;
   
-    constructor(x: number, y: number, headRadius: number, bodyRadius: number, baseRadius: number, ctx: CanvasRenderingContext2D) {
+    constructor(x: number, y: number, ctx: CanvasRenderingContext2D) {
       this.x = x;
       this.y = y;
-      this.headRadius = headRadius;
-      this.bodyRadius = bodyRadius;
-      this.baseRadius = baseRadius;
       this.ctx = ctx;
     }
   
     public draw() {
-      // Dibuja la cabeza
+      this.drawSnowman();
+      this.drawHat();
+      this.drawFace();
+    }
+  
+    private drawSnowman() {
+      // Cuerpo
       this.ctx.beginPath();
-      this.ctx.arc(this.x, this.y - this.headRadius - this.bodyRadius - this.baseRadius, this.headRadius, 0, Math.PI * 2);
+      this.ctx.arc(this.x, this.y, 30, 0, Math.PI * 2);
       this.ctx.fillStyle = 'white';
       this.ctx.fill();
       this.ctx.closePath();
   
-      // Dibuja el cuerpo
+      // Cabeza
       this.ctx.beginPath();
-      this.ctx.arc(this.x, this.y - this.bodyRadius - this.baseRadius, this.bodyRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = 'white';
-      this.ctx.fill();
-      this.ctx.closePath();
-  
-      // Dibuja la base
-      this.ctx.beginPath();
-      this.ctx.arc(this.x, this.y - this.baseRadius, this.baseRadius, 0, Math.PI * 2);
+      this.ctx.arc(this.x, this.y - 40, 20, 0, Math.PI * 2);
       this.ctx.fillStyle = 'white';
       this.ctx.fill();
       this.ctx.closePath();
     }
   
-    public updatePosition(mouseX: number, mouseY: number) {
-      this.x = mouseX;
-      this.y = mouseY;
+    private drawHat() {
+      // Sombrero
+      this.ctx.beginPath();
+      this.ctx.rect(this.x - 25, this.y - 75, 50, 40);
+      this.ctx.fillStyle = 'black';
+      this.ctx.fill();
+      this.ctx.closePath();
+  
+      // Banda del sombrero
+      this.ctx.beginPath();
+      this.ctx.rect(this.x - 25, this.y - 75, 50, 10);
+      this.ctx.fillStyle = 'red';
+      this.ctx.fill();
+      this.ctx.closePath();
     }
   
-    public checkCollision(mouseX: number, mouseY: number) {
-      const distance = Math.sqrt((mouseX - this.x) * 2 + (mouseY - this.y) * 2);
-      return distance < this.headRadius + this.bodyRadius + this.baseRadius;
+    private drawFace() {
+      // Ojos
+      this.ctx.beginPath();
+      this.ctx.arc(this.x - 8, this.y - 45, 2, 0, Math.PI * 2);
+      this.ctx.fillStyle = 'red'; // Color de los ojos
+      this.ctx.fill();
+      this.ctx.closePath();
+  
+      this.ctx.beginPath();
+      this.ctx.arc(this.x + 8, this.y - 45, 2, 0, Math.PI * 2);
+      this.ctx.fillStyle = 'red'; // Color de los ojos
+      this.ctx.fill();
+      this.ctx.closePath();
+  
+      // Nariz
+      this.ctx.beginPath();
+      this.ctx.moveTo(this.x - 2, this.y - 40);
+      this.ctx.lineTo(this.x + 2, this.y - 40);
+      this.ctx.lineTo(this.x, this.y - 35);
+      this.ctx.fillStyle = 'orange'; // Color de la nariz
+      this.ctx.fill();
+      this.ctx.closePath();
+  
+      // Boca
+      this.ctx.beginPath();
+      this.ctx.arc(this.x, this.y - 35, 5, 0, Math.PI, false);
+      this.ctx.fillStyle = 'black'; // Color de la boca
+      this.ctx.fill();
+      this.ctx.closePath();
     }
   }

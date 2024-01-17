@@ -311,6 +311,11 @@ function animateParticles(){
   requestAnimationFrame(animateParticles);
 }
 
+function handleMouse(event: MouseEvent) {
+  mouse.x = event.clientX;
+  mouse.y = event.clientY;
+}
+
 // primera operacion: cuadrantes con color 
 let colorfulQuadrantArray: ColorfulQuadrant[] = [];
 const numQuadrants = 4;
@@ -410,43 +415,36 @@ function opFondoSubmarino() {
 
 
 // fecto tormenta
-
 let snowman: Snowman;
 
 function initSnowman() {
- 
-  snowman = new Snowman(200, 200, 30, 50, 70, pantalla2);
+  snowman = new Snowman(pantalla2.canvas.width / 2, pantalla2.canvas.height / 2, ctx);
 }
 
 function animateSnowman() {
-  
   pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+  pantalla2.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
 
   snowman.draw();
-
-  snowman.checkCollision(mouse.x, mouse.y);
-
 
   requestAnimationFrame(animateSnowman);
 }
 
-
-pantalla2.canvas.addEventListener('mousemove', handleMouse);
-
-
-function handleMouse(event: MouseEvent) {
-  mouse.x = event.clientX;
-  mouse.y = event.clientY;
-
-
-  snowman.updatePosition(mouse.x, mouse.y);
+function moveSnowman(e: MouseEvent) {
+  snowman.x = e.clientX - pantalla2.canvas.getBoundingClientRect().left;
+  snowman.y = e.clientY - pantalla2.canvas.getBoundingClientRect().top;
 }
 
 function opsnowman() {
- 
   initSnowman();
   animateSnowman();
+  pantalla2.canvas.addEventListener('mousemove', moveSnowman);
 }
+
+
+
+
+
 
 //seccion de histogramas  
 function histogramas(evt: any): void{
