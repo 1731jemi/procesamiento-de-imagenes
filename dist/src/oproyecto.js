@@ -160,6 +160,67 @@ var Snowman = /** @class */ (function () {
         this.ctx.fill();
         this.ctx.closePath();
     };
+    Snowman.prototype.update = function () {
+        // Lógica de actualización del hombre de nieve
+        // Puedes agregar aquí cualquier lógica específica para actualizar el estado del hombre de nieve.
+    };
     return Snowman;
 }());
 export { Snowman };
+var Snowflake = /** @class */ (function () {
+    function Snowflake(x, y, radius, ctx) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speedY = Math.random() * 2 + 1; // Velocidad vertical aleatoria
+        this.ctx = ctx;
+    }
+    Snowflake.prototype.draw = function () {
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = 'white';
+        this.ctx.fill();
+        this.ctx.closePath();
+    };
+    Snowflake.prototype.update = function () {
+        this.y += this.speedY;
+        // Reinicia la posición si el copo de nieve se eleva fuera del lienzo
+        if (this.y - this.radius > this.ctx.canvas.height) {
+            this.y = -this.radius;
+        }
+    };
+    return Snowflake;
+}());
+export { Snowflake };
+var Snowstorm = /** @class */ (function () {
+    function Snowstorm(snowman, ctx) {
+        this.snowflakes = [];
+        this.snowman = snowman;
+        this.ctx = ctx;
+        // Crear copos de nieve
+        for (var i = 0; i < 100; i++) {
+            var x = Math.random() * this.ctx.canvas.width;
+            var y = Math.random() * this.ctx.canvas.height;
+            var radius = Math.random() * 3 + 1;
+            this.snowflakes.push(new Snowflake(x, y, radius, this.ctx));
+        }
+    }
+    Snowstorm.prototype.draw = function () {
+        // Dibujar hombre de nieve
+        this.snowman.draw();
+        // Dibujar copos de nieve
+        for (var i = 0; i < this.snowflakes.length; i++) {
+            this.snowflakes[i].draw();
+        }
+    };
+    Snowstorm.prototype.update = function () {
+        // Actualizar hombre de nieve
+        this.snowman.update();
+        // Actualizar copos de nieve
+        for (var i = 0; i < this.snowflakes.length; i++) {
+            this.snowflakes[i].update();
+        }
+    };
+    return Snowstorm;
+}());
+export { Snowstorm };

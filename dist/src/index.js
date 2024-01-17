@@ -4,7 +4,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed, Snowman } from "./oproyecto.js";
+import { ColorfulQuadrant, Bubble, Seaweed, Snowman, Snowstorm } from "./oproyecto.js";
 var lienzo1;
 var lienzo2;
 var lienzo4;
@@ -359,7 +359,7 @@ function opFondoSubmarino() {
     initUnderwater();
     animateUnderwater();
 }
-// fecto tormenta
+// fecto snowman
 var snowman;
 function initSnowman() {
     snowman = new Snowman(pantalla2.canvas.width / 2, pantalla2.canvas.height / 2, ctx);
@@ -378,6 +378,28 @@ function opsnowman() {
     initSnowman();
     animateSnowman();
     pantalla2.canvas.addEventListener('mousemove', moveSnowman);
+}
+// snowman con rain 
+var snowstorm;
+function initSnowstorm() {
+    snowman = new Snowman(pantalla2.canvas.width / 2, pantalla2.canvas.height / 2, ctx);
+    snowstorm = new Snowstorm(snowman, ctx);
+}
+function animateSnowstorm() {
+    pantalla2.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    pantalla2.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    snowstorm.update();
+    snowstorm.draw();
+    requestAnimationFrame(animateSnowstorm);
+}
+function moveSnowman1(e) {
+    snowman.x = e.clientX - pantalla2.canvas.getBoundingClientRect().left;
+    snowman.y = e.clientY - pantalla2.canvas.getBoundingClientRect().top;
+}
+function opsnowandtorment() {
+    initSnowstorm();
+    animateSnowstorm();
+    pantalla2.canvas.addEventListener('mousemove', moveSnowman1);
 }
 //seccion de histogramas  
 function histogramas(evt) {
@@ -490,3 +512,4 @@ dropZone.addEventListener('drop', imgLocal.handleFileSelect, false);
 document.getElementById("op-cuadrantes").addEventListener('click', opCuadrantesColor, false);
 document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSubmarino, false);
 document.getElementById("op-snowman").addEventListener('click', opsnowman, false);
+document.getElementById("op-snowandtorment").addEventListener('click', opsnowandtorment, false);

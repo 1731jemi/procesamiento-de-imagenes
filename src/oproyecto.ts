@@ -205,4 +205,81 @@ export class ColorfulQuadrant {
       this.ctx.fill();
       this.ctx.closePath();
     }
+
+    public update() {
+      // Lógica de actualización del hombre de nieve
+      // Puedes agregar aquí cualquier lógica específica para actualizar el estado del hombre de nieve.
+    }
+  }
+
+ export class Snowflake {
+    protected x: number;
+    protected y: number;
+    protected radius: number;
+    protected speedY: number;
+    protected ctx: CanvasRenderingContext2D;
+  
+    constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.speedY = Math.random() * 2 + 1; // Velocidad vertical aleatoria
+      this.ctx = ctx;
+    }
+  
+    public draw() {
+      this.ctx.beginPath();
+      this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      this.ctx.fillStyle = 'white';
+      this.ctx.fill();
+      this.ctx.closePath();
+    }
+  
+    public update() {
+      this.y += this.speedY;
+  
+      // Reinicia la posición si el copo de nieve se eleva fuera del lienzo
+      if (this.y - this.radius > this.ctx.canvas.height) {
+        this.y = -this.radius;
+      }
+    }
+  }
+  
+  export class Snowstorm {
+    protected snowman: Snowman;
+    protected snowflakes: Snowflake[] = [];
+    protected ctx: CanvasRenderingContext2D;
+  
+    constructor(snowman: Snowman, ctx: CanvasRenderingContext2D) {
+      this.snowman = snowman;
+      this.ctx = ctx;
+  
+      // Crear copos de nieve
+      for (let i = 0; i < 100; i++) {
+        let x = Math.random() * this.ctx.canvas.width;
+        let y = Math.random() * this.ctx.canvas.height;
+        let radius = Math.random() * 3 + 1;
+        this.snowflakes.push(new Snowflake(x, y, radius, this.ctx));
+      }
+    }
+  
+    public draw() {
+      // Dibujar hombre de nieve
+      this.snowman.draw();
+  
+      // Dibujar copos de nieve
+      for (let i = 0; i < this.snowflakes.length; i++) {
+        this.snowflakes[i].draw();
+      }
+    }
+  
+    public update() {
+      // Actualizar hombre de nieve
+      this.snowman.update();
+  
+      // Actualizar copos de nieve
+      for (let i = 0; i < this.snowflakes.length; i++) {
+        this.snowflakes[i].update();
+      }
+    }
   }
