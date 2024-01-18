@@ -224,3 +224,26 @@ var Snowstorm = /** @class */ (function () {
     return Snowstorm;
 }());
 export { Snowstorm };
+var ErrorMessage = /** @class */ (function () {
+    function ErrorMessage(x, y, width, height, ctx, text) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.ctx = ctx;
+        this.color = 'red';
+        this.text = text;
+    }
+    ErrorMessage.prototype.draw = function () {
+        this.ctx.fillStyle = this.color;
+        this.ctx.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 12px Arial';
+        this.ctx.fillText(this.text, this.x - this.width / 2 + 10, this.y - this.height / 2 + 20);
+    };
+    ErrorMessage.prototype.update = function () {
+        this.y -= 2; // Ajustar la velocidad de movimiento
+    };
+    return ErrorMessage;
+}());
+export { ErrorMessage };

@@ -5,7 +5,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm} from "./oproyecto.js"
+import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage} from "./oproyecto.js"
 
 
 
@@ -472,7 +472,47 @@ function opsnowandtorment() {
 }
 
 
+//animacion de errores
 
+const errorMessages: ErrorMessage[] = [];
+
+function generateErrorMessage(text: string) {
+  const x = pantalla2.canvas.width / 2;
+  const y = pantalla2.canvas.height / 2;
+  const width = Math.random() * 300 + 100; // Ancho aleatorio entre 100 y 400
+  const height = Math.random() * 80 + 40; // Altura aleatoria entre 40 y 120
+  errorMessages.push(new ErrorMessage(x, y, width, height, ctx, text));
+}
+
+function animateErrorMessages() {
+ 
+  ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+
+
+  for (let i = 0; i < errorMessages.length; i++) {
+    errorMessages[i].update();
+    errorMessages[i].draw();
+
+    if (errorMessages[i].y + errorMessages[i].height / 2 < 0) {
+      errorMessages.splice(i, 1);
+      i--;
+    }
+  }
+
+  
+  requestAnimationFrame(animateErrorMessages);
+}
+
+function operrores() {
+  // Simula la generación de mensajes de error cada cierto tiempo
+  setInterval(() => {
+    const errorTexts = ['Error de sistema', 'Fallo en la aplicación', 'Windows ha detectado un problema'];
+    const randomText = errorTexts[Math.floor(Math.random() * errorTexts.length)];
+    generateErrorMessage(randomText);
+  }, 500); 
+
+  animateErrorMessages();
+}
 
 
 //seccion de histogramas  
@@ -605,4 +645,4 @@ document.getElementById("op-cuadrantes").addEventListener('click', opCuadrantesC
 document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSubmarino, false);
 document.getElementById("op-snowman").addEventListener('click', opsnowman, false);
 document.getElementById("op-snowandtorment").addEventListener('click', opsnowandtorment, false);
-
+document.getElementById("op-errores").addEventListener('click', operrores, false);

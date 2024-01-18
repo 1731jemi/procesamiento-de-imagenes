@@ -283,3 +283,35 @@ export class ColorfulQuadrant {
       }
     }
   }
+
+  export class ErrorMessage {
+    protected x: number;
+    public y: number;
+    protected width: number;
+    public height: number;
+    protected ctx: CanvasRenderingContext2D;
+    protected color: string;
+    protected text: string;
+  
+    constructor(x: number, y: number, width: number, height: number, ctx: CanvasRenderingContext2D, text: string) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.ctx = ctx;
+      this.color = 'red';
+      this.text = text;
+    }
+  
+    public draw() {
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+      this.ctx.fillStyle = 'white';
+      this.ctx.font = 'bold 12px Arial';
+      this.ctx.fillText(this.text, this.x - this.width / 2 + 10, this.y - this.height / 2 + 20);
+    }
+  
+    public update() {
+      this.y -= 2; // Ajustar la velocidad de movimiento
+    }
+  }

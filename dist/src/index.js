@@ -4,7 +4,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed, Snowman, Snowstorm } from "./oproyecto.js";
+import { ColorfulQuadrant, Bubble, Seaweed, Snowman, Snowstorm, ErrorMessage } from "./oproyecto.js";
 var lienzo1;
 var lienzo2;
 var lienzo4;
@@ -401,6 +401,36 @@ function opsnowandtorment() {
     animateSnowstorm();
     pantalla2.canvas.addEventListener('mousemove', moveSnowman1);
 }
+//animacion de errores
+var errorMessages = [];
+function generateErrorMessage(text) {
+    var x = pantalla2.canvas.width / 2;
+    var y = pantalla2.canvas.height / 2;
+    var width = Math.random() * 300 + 100; // Ancho aleatorio entre 100 y 400
+    var height = Math.random() * 80 + 40; // Altura aleatoria entre 40 y 120
+    errorMessages.push(new ErrorMessage(x, y, width, height, ctx, text));
+}
+function animateErrorMessages() {
+    ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    for (var i = 0; i < errorMessages.length; i++) {
+        errorMessages[i].update();
+        errorMessages[i].draw();
+        if (errorMessages[i].y + errorMessages[i].height / 2 < 0) {
+            errorMessages.splice(i, 1);
+            i--;
+        }
+    }
+    requestAnimationFrame(animateErrorMessages);
+}
+function operrores() {
+    // Simula la generación de mensajes de error cada cierto tiempo
+    setInterval(function () {
+        var errorTexts = ['Error de sistema', 'Fallo en la aplicación', 'Windows ha detectado un problema'];
+        var randomText = errorTexts[Math.floor(Math.random() * errorTexts.length)];
+        generateErrorMessage(randomText);
+    }, 500);
+    animateErrorMessages();
+}
 //seccion de histogramas  
 function histogramas(evt) {
     var imagenSal = new ImageType(pantalla1, imgLocal.getImage());
@@ -513,3 +543,4 @@ document.getElementById("op-cuadrantes").addEventListener('click', opCuadrantesC
 document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSubmarino, false);
 document.getElementById("op-snowman").addEventListener('click', opsnowman, false);
 document.getElementById("op-snowandtorment").addEventListener('click', opsnowandtorment, false);
+document.getElementById("op-errores").addEventListener('click', operrores, false);
