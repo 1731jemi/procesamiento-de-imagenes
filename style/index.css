@@ -14,7 +14,8 @@
 
 .header{
   width: 800px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Helvetica, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: medium;
   grid-area: header;
 }
 
@@ -25,7 +26,7 @@ ul{
   background-color: rgb(229, 235, 183);
   color: black;
   text-decoration: none;
-  padding: 10px 75px;
+  padding: 10px 85px;
   display: block;
 }
 .nav li span:hover{
