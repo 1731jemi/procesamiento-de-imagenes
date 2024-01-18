@@ -349,4 +349,73 @@ export class ColorfulQuadrant {
       this.y = Math.random() * (this.ctx.canvas.height - this.size);
     }
   }
+
+
+  export class Star {
+    protected x: number;
+    protected y: number;
+    protected size: number;
+    protected ctx: CanvasRenderingContext2D;
+    protected color: string;
   
+    constructor(x: number, y: number, size: number, ctx: CanvasRenderingContext2D, color: string) {
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.ctx = ctx;
+      this.color = color;
+    }
+  
+    public draw() {
+      this.ctx.fillStyle = this.color;
+      this.ctx.beginPath();
+      this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+  
+    public move() {
+      this.y += 1; // Ajusta la velocidad de movimiento vertical de las estrellas
+      if (this.y > this.ctx.canvas.height) {
+        this.y = 0; // Reinicia la posición si la estrella sale de la pantalla
+      }
+    }
+  }
+
+export class GalacticStar {
+  protected x: number;
+  protected y: number;
+  protected size: number;
+  protected ctx: CanvasRenderingContext2D;
+  protected color: string;
+
+  constructor(x: number, y: number, size: number, ctx: CanvasRenderingContext2D, color: string) {
+    this.x = x;
+    this.y = y;
+    this.size = size;
+    this.ctx = ctx;
+    this.color = color;
+  }
+
+  public move() {
+    // Ajusta la velocidad y patrón de movimiento para simular una espiral galáctica
+    const angle = (this.x + this.y) * 0.02;
+    const speed = 1;
+    this.x += Math.cos(angle) * speed;
+    this.y += Math.sin(angle) * speed;
+
+    if (this.x < 0 || this.x > this.ctx.canvas.width || this.y < 0 || this.y > this.ctx.canvas.height) {
+      
+      this.x = Math.random() * this.ctx.canvas.width;
+      this.y = Math.random() * this.ctx.canvas.height;
+    }
+  }
+
+  public draw() {
+
+    this.ctx.fillStyle = this.color;
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+}

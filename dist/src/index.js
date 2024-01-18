@@ -4,7 +4,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed, Snowman, Snowstorm, ErrorMessage, TeleportationSquare } from "./oproyecto.js";
+import { ColorfulQuadrant, Bubble, Seaweed, Snowman, Snowstorm, ErrorMessage, TeleportationSquare, GalacticStar } from "./oproyecto.js";
 var lienzo1;
 var lienzo2;
 var lienzo4;
@@ -452,6 +452,41 @@ function opTeleportacionCuadrado() {
     initTeleportationSquare();
     animateTeleportationSquare();
 }
+// vortice de galaxia
+var galacticStars = [];
+function initGalacticStars() {
+    var centerX = pantalla2.canvas.width / 2;
+    var centerY = pantalla2.canvas.height / 2;
+    for (var i = 0; i < 300; i++) {
+        var angle = i * 0.7;
+        var radius = i * 0.9;
+        var x = centerX + radius * Math.cos(angle);
+        var y = centerY + radius * Math.sin(angle);
+        var size = Math.random() * 2 + 1;
+        var color = getRandomColor();
+        galacticStars.push(new GalacticStar(x, y, size, ctx, color));
+    }
+}
+function animateGalacticStars() {
+    ctx.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    // Dibuja la imagen original con una opacidad
+    ctx.globalAlpha = 0.8;
+    ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+    ctx.globalAlpha = 1; // Restaura la opacidad al valor normal
+    for (var i = 0; i < galacticStars.length; i++) {
+        galacticStars[i].move();
+        galacticStars[i].draw();
+    }
+    requestAnimationFrame(animateGalacticStars);
+}
+function opViaLactea() {
+    initGalacticStars();
+    animateGalacticStars();
+}
+function getRandomColor() {
+    // Genera un color hexadecimal aleatorio
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
 //seccion de histogramas  
 function histogramas(evt) {
     var imagenSal = new ImageType(pantalla1, imgLocal.getImage());
@@ -566,3 +601,4 @@ document.getElementById("op-snowman").addEventListener('click', opsnowman, false
 document.getElementById("op-snowandtorment").addEventListener('click', opsnowandtorment, false);
 document.getElementById("op-errores").addEventListener('click', operrores, false);
 document.getElementById("op-Teleportacion").addEventListener('click', opTeleportacionCuadrado, false);
+document.getElementById("op-vialactea").addEventListener('click', opViaLactea, false);

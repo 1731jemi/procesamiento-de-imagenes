@@ -271,3 +271,55 @@ var TeleportationSquare = /** @class */ (function () {
     return TeleportationSquare;
 }());
 export { TeleportationSquare };
+var Star = /** @class */ (function () {
+    function Star(x, y, size, ctx, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.ctx = ctx;
+        this.color = color;
+    }
+    Star.prototype.draw = function () {
+        this.ctx.fillStyle = this.color;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        this.ctx.fill();
+    };
+    Star.prototype.move = function () {
+        this.y += 1; // Ajusta la velocidad de movimiento vertical de las estrellas
+        if (this.y > this.ctx.canvas.height) {
+            this.y = 0; // Reinicia la posición si la estrella sale de la pantalla
+        }
+    };
+    return Star;
+}());
+export { Star };
+var GalacticStar = /** @class */ (function () {
+    function GalacticStar(x, y, size, ctx, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.ctx = ctx;
+        this.color = color;
+    }
+    GalacticStar.prototype.move = function () {
+        // Ajusta la velocidad y patrón de movimiento para simular una espiral galáctica
+        var angle = (this.x + this.y) * 0.02;
+        var speed = 1;
+        this.x += Math.cos(angle) * speed;
+        this.y += Math.sin(angle) * speed;
+        if (this.x < 0 || this.x > this.ctx.canvas.width || this.y < 0 || this.y > this.ctx.canvas.height) {
+            this.x = Math.random() * this.ctx.canvas.width;
+            this.y = Math.random() * this.ctx.canvas.height;
+        }
+    };
+    GalacticStar.prototype.draw = function () {
+        this.ctx.fillStyle = this.color;
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.closePath();
+    };
+    return GalacticStar;
+}());
+export { GalacticStar };

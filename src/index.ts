@@ -5,7 +5,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage, TeleportationSquare } from "./oproyecto.js"
+import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage, TeleportationSquare, GalacticStar  } from "./oproyecto.js"
 
 
 
@@ -515,7 +515,7 @@ function operrores() {
 }
 
 // cuadrado cambiante
- 
+
 
 
 let teleportationSquare: TeleportationSquare;
@@ -546,6 +546,60 @@ function opTeleportacionCuadrado() {
   initTeleportationSquare();
   animateTeleportationSquare();
 }
+
+// vortice de galaxia
+
+let galacticStars: GalacticStar[] = [];
+
+function initGalacticStars() {
+  const centerX = pantalla2.canvas.width / 2;
+  const centerY = pantalla2.canvas.height / 2;
+
+  for (let i = 0; i < 300; i++) {
+   
+    const angle = i * 0.7;
+    const radius = i * 0.9;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    
+    let size = Math.random() * 2 + 1;
+    let color = getRandomColor();
+
+    galacticStars.push(new GalacticStar(x, y, size, ctx, color));
+  }
+}
+
+function animateGalacticStars() {
+  ctx.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+
+  // Dibuja la imagen original con una opacidad
+  ctx.globalAlpha = 0.8;
+  ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+  ctx.globalAlpha = 1; // Restaura la opacidad al valor normal
+
+  for (let i = 0; i < galacticStars.length; i++) {
+    galacticStars[i].move();
+    galacticStars[i].draw();
+  }
+
+  requestAnimationFrame(animateGalacticStars);
+}
+
+function opViaLactea() {
+  initGalacticStars();
+  animateGalacticStars();
+}
+
+function getRandomColor() {
+  // Genera un color hexadecimal aleatorio
+  return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
+
+
+
+
+
+
 
 //seccion de histogramas  
 function histogramas(evt: any): void{
@@ -680,3 +734,4 @@ document.getElementById("op-snowandtorment").addEventListener('click', opsnowand
 document.getElementById("op-errores").addEventListener('click', operrores, false);
 
 document.getElementById("op-Teleportacion").addEventListener('click', opTeleportacionCuadrado, false);
+document.getElementById("op-vialactea").addEventListener('click', opViaLactea, false);
