@@ -419,3 +419,47 @@ export class GalacticStar {
     this.ctx.closePath();
   }
 }
+
+export class BouncingBall {
+  protected x: number;
+  protected y: number;
+  protected radius: number;
+  protected ctx: CanvasRenderingContext2D;
+  protected color: string;
+  protected velocityX: number;
+  protected velocityY: number;
+
+  constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.ctx = ctx;
+    this.color = getRandomColor();
+    this.velocityX = 2;
+    this.velocityY = 2;
+  }
+
+  public update() {
+    this.x += this.velocityX;
+    this.y += this.velocityY;
+
+    // Rebote en los bordes
+    if (this.x + this.radius > this.ctx.canvas.width || this.x - this.radius < 0) {
+      this.velocityX *= -1;
+      this.color = getRandomColor();
+    }
+
+    if (this.y + this.radius > this.ctx.canvas.height || this.y - this.radius < 0) {
+      this.velocityY *= -1;
+      this.color = getRandomColor();
+    }
+  }
+
+  public draw() {
+    this.ctx.beginPath();
+    this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    this.ctx.fillStyle = this.color;
+    this.ctx.fill();
+    this.ctx.closePath();
+  }
+}

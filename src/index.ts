@@ -5,7 +5,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage, TeleportationSquare, GalacticStar  } from "./oproyecto.js"
+import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage, TeleportationSquare, GalacticStar , BouncingBall } from "./oproyecto.js"
 
 
 
@@ -596,9 +596,29 @@ function getRandomColor() {
 }
 
 
+// bola
 
 
+let bouncingBall: BouncingBall;
 
+function initBouncingBall() {
+  bouncingBall = new BouncingBall(50, 50, 20, ctx);
+}
+
+function animateBouncingBall() {
+  ctx.clearRect(0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+  ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+
+  bouncingBall.update();
+  bouncingBall.draw();
+
+  requestAnimationFrame(animateBouncingBall);
+}
+
+function opball() {
+  initBouncingBall();
+  animateBouncingBall();
+}
 
 
 //seccion de histogramas  
@@ -735,3 +755,4 @@ document.getElementById("op-errores").addEventListener('click', operrores, false
 
 document.getElementById("op-Teleportacion").addEventListener('click', opTeleportacionCuadrado, false);
 document.getElementById("op-vialactea").addEventListener('click', opViaLactea, false);
+document.getElementById("op-bola").addEventListener('click', opball, false);
