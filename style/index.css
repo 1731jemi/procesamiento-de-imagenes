@@ -1,5 +1,5 @@
 * {
-    background-color: lightgoldenrodyellow;
+    background-color: rgb(235, 159, 197);
     padding: 0;
     margin: 0;
 }
@@ -22,7 +22,7 @@ ul{
   list-style: none;
 }
 .nav li span{
-  background-color: rgb(236, 151, 201);
+  background-color: rgb(229, 235, 183);
   color: black;
   text-decoration: none;
   padding: 10px 75px;
