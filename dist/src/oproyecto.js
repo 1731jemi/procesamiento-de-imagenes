@@ -247,3 +247,27 @@ var ErrorMessage = /** @class */ (function () {
     return ErrorMessage;
 }());
 export { ErrorMessage };
+var TeleportationSquare = /** @class */ (function () {
+    function TeleportationSquare(x, y, size, ctx, colors) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.ctx = ctx;
+        this.colors = colors;
+        this.currentColorIndex = 0;
+    }
+    TeleportationSquare.prototype.draw = function () {
+        // Dibuja el cuadrado en el color actual
+        this.ctx.fillStyle = this.colors[this.currentColorIndex];
+        this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    };
+    TeleportationSquare.prototype.teleport = function () {
+        // Cambia al siguiente color en el array circularmente
+        this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length;
+        // Ubica el cuadrado en una posición aleatoria dentro del lienzo
+        this.x = Math.random() * (this.ctx.canvas.width - this.size);
+        this.y = Math.random() * (this.ctx.canvas.height - this.size);
+    };
+    return TeleportationSquare;
+}());
+export { TeleportationSquare };

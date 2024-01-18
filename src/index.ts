@@ -5,7 +5,7 @@ import { MathImg } from "./MathImg.js";
 import { Particle } from "./particle.js";
 import { ParticleText } from "./particle.js";
 import { CanvasLocal } from './canvasLocal.js';
-import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage} from "./oproyecto.js"
+import { ColorfulQuadrant, Bubble, Seaweed , Snowman, Snowstorm, ErrorMessage, TeleportationSquare } from "./oproyecto.js"
 
 
 
@@ -514,6 +514,38 @@ function operrores() {
   animateErrorMessages();
 }
 
+// cuadrado cambiante
+ 
+
+
+let teleportationSquare: TeleportationSquare;
+
+function initTeleportationSquare() {
+  const colors = ['red', 'green', 'blue', 'yellow', 'purple']; // Puedes personalizar los colores
+  teleportationSquare = new TeleportationSquare(50, 50, 30, ctx, colors);
+}
+
+function animateTeleportationSquare() {
+ 
+  ctx.drawImage(imgLocal.getImage(), 0, 0, pantalla2.canvas.width, pantalla2.canvas.height);
+
+ 
+  if (teleportationSquare) {
+    teleportationSquare.draw();
+    
+    // Retraso de 500 milisegundos 
+    setTimeout(() => {
+      teleportationSquare.teleport();
+      requestAnimationFrame(animateTeleportationSquare);
+    }, 500);
+  }
+}
+
+function opTeleportacionCuadrado() {
+ 
+  initTeleportationSquare();
+  animateTeleportationSquare();
+}
 
 //seccion de histogramas  
 function histogramas(evt: any): void{
@@ -646,3 +678,5 @@ document.getElementById("op-fondosubmarino").addEventListener('click', opFondoSu
 document.getElementById("op-snowman").addEventListener('click', opsnowman, false);
 document.getElementById("op-snowandtorment").addEventListener('click', opsnowandtorment, false);
 document.getElementById("op-errores").addEventListener('click', operrores, false);
+
+document.getElementById("op-Teleportacion").addEventListener('click', opTeleportacionCuadrado, false);

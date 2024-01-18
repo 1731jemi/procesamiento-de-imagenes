@@ -315,3 +315,38 @@ export class ColorfulQuadrant {
       this.y -= 2; // Ajustar la velocidad de movimiento
     }
   }
+
+  
+  export class TeleportationSquare {
+    protected x: number;
+    protected y: number;
+    protected size: number;
+    protected ctx: CanvasRenderingContext2D;
+    protected colors: string[];
+    protected currentColorIndex: number;
+  
+    constructor(x: number, y: number, size: number, ctx: CanvasRenderingContext2D, colors: string[]) {
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.ctx = ctx;
+      this.colors = colors;
+      this.currentColorIndex = 0;
+    }
+  
+    public draw() {
+      // Dibuja el cuadrado en el color actual
+      this.ctx.fillStyle = this.colors[this.currentColorIndex];
+      this.ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
+  
+    public teleport() {
+      // Cambia al siguiente color en el array circularmente
+      this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length;
+  
+      // Ubica el cuadrado en una posición aleatoria dentro del lienzo
+      this.x = Math.random() * (this.ctx.canvas.width - this.size);
+      this.y = Math.random() * (this.ctx.canvas.height - this.size);
+    }
+  }
+  
