@@ -487,7 +487,7 @@ function getRandomColor() {
     // Genera un color hexadecimal aleatorio
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
-// bomba 
+// bola
 var bouncingBall;
 function initBouncingBall() {
     bouncingBall = new BouncingBall(50, 50, 20, ctx);
@@ -618,4 +618,4 @@ document.getElementById("op-snowandtorment").addEventListener('click', opsnowand
 document.getElementById("op-errores").addEventListener('click', operrores, false);
 document.getElementById("op-Teleportacion").addEventListener('click', opTeleportacionCuadrado, false);
 document.getElementById("op-vialactea").addEventListener('click', opViaLactea, false);
-document.getElementById("op-bombas").addEventListener('click', opball, false);
+document.getElementById("op-bola").addEventListener('click', opball, false);
